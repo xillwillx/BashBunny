@@ -8,7 +8,7 @@
 # then stashes them in /root/udisk/loot/WiFiCreds
 #
 # Red................Failed to get WiFi Creds
-# Purple.............Got some spreadsheets
+# Purple.............Got WiFi Creds
 # Green..............Finished
 #
 
@@ -32,7 +32,7 @@ QUACK DELAY 5000
 
 # Green LED for finished
 LED G
-
+# I think this may work , dont have my bunny to test right now
 files=$(ls /Volumes/BashBunny/$LOOTDIR/*.txt 2> /dev/null | wc -l)
 if [ "$files" != "0"]
 then
