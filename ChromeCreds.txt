@@ -6,6 +6,7 @@
 #
 # Dumps the stored plaintext Chrome passwords from Windows boxes downloading a Powershell script from sekirkity/BrowserGather
 # then stashes them in /root/udisk/loot/ChromeCreds
+# Credits to https://github.com/sekirkity/BrowserGather , hopefully he finishes adding the IE and Firefox to the script soon
 #script 
 # Blue...............Running Script
 # Purple.............Got Chrome Creds
