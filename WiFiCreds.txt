@@ -6,7 +6,6 @@
 #
 # Dumps the stored plaintext Wifi SSID & passwords from Windows boxes using Powershell
 # then stashes them in /root/udisk/loot/WiFiCreds
-# Credits to https://github.com/sekirkity/BrowserGather , hopefully he finishes adding the IE and Firefox to the script soon
 #
 # Blue...............Running Script
 # Purple.............Got WiFi Creds
