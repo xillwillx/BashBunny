@@ -56,3 +56,4 @@ def run(server_class=HTTPServer, handler_class=RequestServer, port=80):
 
 
 if __name__ == '__main__':
+    run()
