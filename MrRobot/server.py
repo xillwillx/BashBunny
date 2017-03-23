@@ -23,14 +23,14 @@ class RequestServer(BaseHTTPRequestHandler):
     def do_POST(self):
         global IS_RUNNING
 
-        content_length = int(self.headers['Content-Length'])
-        data = self.rfile.read(content_length)
-        filename = self.path[1:]
-        
-        with open("{}.txt".format(filename), "w+") as f:
-            f.write(data)
-
-        IS_RUNNING = False
+        if filename == 'EOF':
+            IS_RUNNING = False
+        else:
+            content_length = int(self.headers['Content-Length'])
+            data = self.rfile.read(content_length)
+            filename = self.path[1:]
+            with open("{}.txt".format(filename), "w+") as f:
+                f.write(data)
         self._set_headers()
        
 
