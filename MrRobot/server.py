@@ -29,7 +29,7 @@ class RequestServer(BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             data = self.rfile.read(content_length)
             filename = self.path[1:]
-            with open("{}.txt".format(filename), "w+") as f:
+            with open("loot/{}.txt".format(filename), "w+") as f:
                 f.write(data)
         self._set_headers()
        
