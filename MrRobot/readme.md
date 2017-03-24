@@ -17,10 +17,12 @@ None needed.
 
 | LED                | Status                                       |
 | ------------------ | -------------------------------------------- |
-| White (blinking)   | Starting WebServer                           |
-| Blue (blinking)    | Running Powershell                           |
-| Purple (blinking)  | Got Creds                                    |
-| Green  (blinking)  | Didn't Get Creds                             |
+| Amber (blinking)   | Starting WebServer                           |
+| Blue (blinking)    | Running Powershell / Waiting for WebServer   |
+| White (blinking)   | WebServer started and Uploading Results      |
+| Purple  (blinking) | DChecking for Results                        |
+| Green (blinking)   | Got Creds and copied to loot folder          |
+| Red (blinking)     | No Creds / Mimikatz failed                   |
 
 ## Discussion
-N/A
+[Hak5 Forum Thread](https://forums.hak5.org/index.php?/topic/40524-payload-mrrobot/ "Hak5 Forum Thread")
