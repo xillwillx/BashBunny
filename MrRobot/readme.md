@@ -1,7 +1,7 @@
 # MrRobot
 ![alt tag](http://i.imgur.com/eunFr0U.jpg)
 * Author: illwill & tuxxy
-* Version: Version 0.1
+* Version: Version 0.2
 * Target: Windows
 
 ## Description
