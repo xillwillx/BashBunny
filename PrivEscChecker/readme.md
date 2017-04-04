@@ -12,10 +12,10 @@ Credits to rasta-mouse for their powershell script:
 https://github.com/rasta-mouse/Sherlock Sherlock.ps1
 
 Tested on:
-Windows 7 SP1 32-bit
-Windows 7 SP1 64-bit
-Windows 8 64-bit
-Windows 10 64-bit
++ Windows 7 SP1 32-bit
++ Windows 7 SP1 64-bit
++ Windows 8 64-bit
++ Windows 10 64-bit
 
 ## Configuration
 
