@@ -5,9 +5,9 @@
 
 ## Description
 
-Check Windows box for unpatched vulns that allow privilege escalation
-then stashes them in /root/udisk/loot/PrivEscChecker/%ComputerName%-%username%
-Can be used locally or webdls the script from github
+Checks Windows boxes for unpatched vulns that allow privilege escalation
+then stores result in /root/udisk/loot/PrivEscChecker/%ComputerName%-%username%
+Can be used locally or webdl the script from github
 Credits to rasta-mouse for their powershell script:
 https://github.com/rasta-mouse/Sherlock Sherlock.ps1
 
@@ -36,3 +36,4 @@ Eventually add https://github.com/PowerShellMafia/PowerSploit/tree/master/Prives
 to check for unquoted paths,dll hijacking, editable services, and other misconfigurations...
 
 ## Discussion
+https://forums.hak5.org/index.php?/topic/40642-payload-privescchecker/
