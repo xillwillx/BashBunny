@@ -6,8 +6,8 @@
 ## Description
 
 Checks Windows boxes for unpatched vulns that allow privilege escalation
-then stores result in /root/udisk/loot/PrivEscChecker/%ComputerName%-%username%
-Can be used locally or webdl the script from github
+then stores the result in /root/udisk/loot/PrivEscChecker/%ComputerName%-%username%
+
 Credits to rasta-mouse for their powershell script:
 https://github.com/rasta-mouse/Sherlock Sherlock.ps1
 
