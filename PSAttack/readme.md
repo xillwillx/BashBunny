@@ -5,11 +5,12 @@
 
 ## Description
 
-Opens powershell with UAC bypass, waits for webserver to start, determines if target is 32 or 64 bit, then downloads PSAttack .csproj file
-onto the target and compiles it with MSBuild using 'Inline Tasks' to bypass Application Whitelisting and Device Guard
+Opens powershell with UAC bypass, waits for webserver to start, determines if target is 32 or 64 bit, then downloads PSAttack .csproj file onto the target and compiles it within MSBuild using 'Inline Tasks' to bypass Application Whitelisting and Device Guard
 
 PSAttack from https://github.com/jaredhaight/psattack
+
 MSBuild Inline Task bypass from @subtee http://subt0x10.blogspot.nl/2016/09/bypassing-application-whitelisting.html
+
 PSA x32 & x64 .csproj files from Nicky Tyrer https://gist.github.com/NickTyrer/8389c3d5698511f5c81bc472ee49a11c
 
 PSAttack Tools:
