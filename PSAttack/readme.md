@@ -53,12 +53,5 @@ None needed.
 | Magenta(Blinking fast)         | Downloading PSAttack                                                |
 | Green(Blinking)                | PSAttack running                                                    |
 
-# Stage 1 (Yellow single blink)..............Running Powershell with UAC Bypass / Waiting for WebServer to start
-# BLUE (Blinking)............................Waiting for WebServer to start
-# Stage 2 (Yellow double blink)..............Webserver Started
-# Magenta(Blinking fast).....................Downloading PSAttack
-# Green(Blinking)............................PSAttack running
-
-
 ## Discussion
 [Hak5 Forum Thread](https://forums.hak5.org/index.php?/topic/40761-payload-psattack/ "Hak5 Forum Thread")
