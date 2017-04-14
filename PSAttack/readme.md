@@ -61,4 +61,4 @@ None needed.
 
 
 ## Discussion
-[Hak5 Forum Thread](https://forums.hak5.org/index.php "Hak5 Forum Thread")
+[Hak5 Forum Thread](https://forums.hak5.org/index.php?/topic/40761-payload-psattack/ "Hak5 Forum Thread")
